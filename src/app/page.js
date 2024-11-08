@@ -51,7 +51,7 @@ alert(response.data.message)
         onSubmit={handleSubmit}
         className="space-y-4 p-6 bg-white shadow-md rounded-lg w-full max-w-lg"
       >
-        <h1>Resource upload form</h1>
+        <h1  className="text-blue-500 ">Resource upload form</h1>
       
         {/* Unit Code */}
         <div>
@@ -63,7 +63,7 @@ alert(response.data.message)
             name="unitCode"
             value={resource.unitCode}
             onChange={handleInputChange}
-            className="mt-1 block w-full border-gray-300 py-1 shadow-sm"
+            className="mt-1 block w-full border-gray-50 text-slate-950 uppercase py-1 shadow-sm"
             required
           />
         </div>
@@ -78,7 +78,7 @@ alert(response.data.message)
             name="unitName"
             value={resource.unitName}
             onChange={handleInputChange}
-            className="mt-1 block w-full border-gray-300 py-1 shadow-sm"
+            className="mt-1 block w-full text-slate-950 uppercase border-gray-50 py-1 shadow-sm"
             required
           />
         </div>
@@ -90,7 +90,7 @@ alert(response.data.message)
             name="isNotes"
             checked={resource.isNotes}
             onChange={handleInputChange}
-            className="h-4 w-4 text-indigo-600 border-gray-300 rounded"
+            className="h-4 w-4 text-indigo-600  border-gray-300 rounded"
           />
           <label className="ml-2 block text-sm font-medium text-gray-700">
             Is Notes
