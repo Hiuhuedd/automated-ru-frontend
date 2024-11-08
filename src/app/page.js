@@ -38,7 +38,7 @@ alert(response.data.message)
         alert(`Error: ${error.response.data.error}`);
       } else {
         console.error('Error uploading file:', error);
-        alert('An error occurred while uploading the file.');
+        alert('An error occurred while generating the file.');
       }
     } finally {
       setLoading(false);
@@ -103,7 +103,7 @@ alert(response.data.message)
           disabled={loading}
           className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
         >
-          {loading ? 'Uploading...' : 'Upload Resource'}
+          {loading ? 'Generating...' : 'Generate Resource'}
         </button>
         {loading && <p>Loading...</p>}
       </form>
