@@ -1,8 +1,10 @@
 "use client";
 import { useState } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   const [resource, setResource] = useState({
@@ -20,6 +22,9 @@ export default function Home() {
     }));
   };
 
+  const handleNavigate = () => {
+    router.push('/resources');
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -47,6 +52,12 @@ alert(response.data.message)
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
+       <button
+        onClick={handleNavigate}
+        className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+      >
+        View Resources
+      </button>
       <form
         onSubmit={handleSubmit}
         className="space-y-4 p-6 bg-white shadow-md rounded-lg w-full max-w-lg"
