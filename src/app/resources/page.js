@@ -48,30 +48,32 @@ export default function Resources() {
 
 
     <div className={`min-h-screen p-4 ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-gray-200 text-black'} font-poppins`}>
-      <div className="flex justify-between items-center mb-4">
-        <input
-          type="text"
-          placeholder="Search resources..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="p-2 border border-gray-300 rounded text-teal-800"
-        />
-  <div className="column ">
-        <h3 className="font-b text-xs">Assets: {filteredResources.length*2181}</h3>
-        <h3 className="font- text-xs">Downloads: {resources.length*200}</h3>
-        </div>
+    <div className="flex flex-col sm:flex-row justify-between items-center mb-4 space-y-2 sm:space-y-0 sm:space-x-4">
+  <input
+    type="text"
+    placeholder="Search resources..."
+    value={searchTerm}
+    onChange={(e) => setSearchTerm(e.target.value)}
+    className="p-2 border border-gray-300 rounded text-teal-800 w-full sm:w-auto sm:flex-1"
+  />
 
-        <button
-      onClick={toggleTheme}
-      className="px-2 py-1 bg-blue-500 text-white rounded flex items-center justify-center"
-    >
-      {isDarkMode ? (
-        <SunIcon className="h-5 w-5" />
-      ) : (
-        <MoonIcon className="h-5 w-5" />
-      )}
-    </button>
-      </div>
+  <div className="flex flex-col sm:flex-row items-center space-y-1 sm:space-y-0 sm:space-x-4">
+    <h3 className="font-semibold text-xs">Assets: {filteredResources.length * 2181}</h3>
+    <h3 className="font-semibold text-xs">Downloads: {resources.length * 200}</h3>
+  </div>
+
+  <button
+    onClick={toggleTheme}
+    className="px-2 py-1 bg-blue-500 text-white rounded flex items-center justify-center"
+  >
+    {isDarkMode ? (
+      <SunIcon className="h-5 w-5" />
+    ) : (
+      <MoonIcon className="h-5 w-5" />
+    )}
+  </button>
+</div>
+
 
       {isLoading ? (
         <div className="flex justify-center items-center min-h-screen">
