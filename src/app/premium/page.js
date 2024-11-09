@@ -23,6 +23,19 @@ export default function PremiumPage() {
     // alert(`Selected ${plan === "monthly" ? "Monthly" : "Semester"} Plan`);
   };
 
+  
+  const handleSubscription = () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) {
+      router.push("/authScreen");
+    } else {
+      const url = `/checkout?plan=${selectedPlan}&amount=${selectedPlan === "monthly" ? 99 : 249}`;
+      router.push(url);
+    }
+  };
+
+
+
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4 sm:p-6 font-poppins relative">
       {/* Back Arrow */}
@@ -91,7 +104,7 @@ export default function PremiumPage() {
           </div>
 
           <button
-            onClick={() => handlePlanSelect(selectedPlan)}
+            onClick={() =>  handleSubscription()}
             className="w-full bg-teal-800 text-white py-2 sm:py-3 rounded-lg text-sm sm:text-lg font-semibold mt-4"
           >
             Subscribe to {selectedPlan === "monthly" ? "Monthly" : "Semester"} Plan

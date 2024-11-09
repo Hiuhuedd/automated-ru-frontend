@@ -42,11 +42,9 @@ export default function Resources() {
 
   const handleViewResource = (resource, index) => {
     if (index >= 3) {
-      // Redirect to premium page for premium resources
       sessionStorage.setItem('available', resources.length);
       router.push('/premium');
     } else {
-      // Redirect to view page for free resources
       sessionStorage.setItem('fileURI', resource.fileURI);
       router.push('/view');
     }
@@ -75,8 +73,21 @@ export default function Resources() {
       </div>
 
       {isLoading ? (
-        <div className="flex justify-center items-center min-h-screen">
-          <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full border-t-transparent border-blue-500" />
+        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+          {Array.from({ length: 8 }).map((_, index) => (
+            <div key={index} className="p-6 shadow rounded bg-gray-300 animate-pulse">
+              <div className="flex items-center mb-4">
+                <div className="w-10 h-10 bg-gray-400 rounded-full"></div>
+                <div className="ml-4 flex-1 space-y-2">
+                  <div className="h-4 bg-gray-400 rounded w-24"></div>
+                  <div className="h-4 bg-gray-400 rounded w-16"></div>
+                </div>
+              </div>
+              <div className="h-24 bg-gray-400 rounded w-full mb-4"></div>
+              <div className="h-4 bg-gray-400 rounded w-32 mb-2"></div>
+              <div className="h-8 bg-gray-400 rounded w-full"></div>
+            </div>
+          ))}
         </div>
       ) : (
         <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
@@ -115,7 +126,7 @@ export default function Resources() {
               </div>
               <p className="uppercase">{resource.unitName}</p>
               <button
-                onClick={() => handleViewResource(resource, index,)}
+                onClick={() => handleViewResource(resource, index)}
                 className="px-2 py-2 mt-3 text-xs bg-sky-800 text-white rounded flex items-center justify-center"
               >
                 View Resource
