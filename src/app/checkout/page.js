@@ -23,7 +23,8 @@ export default function MpesaCheckout() {
   const handleCheckout = () => {
     alert(`Processing ${plan} plan payment of Ksh ${amount} for M-Pesa number ${mpesaNumber}`);
     // Add logic to integrate with the M-Pesa API if available
-    router.push("/resources"); // Redirect back to the premium page
+    router.push("/resources"); 
+    // Redirect back to the 
 
   };
 
