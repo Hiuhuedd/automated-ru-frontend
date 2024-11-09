@@ -17,7 +17,7 @@ export default function Resources() {
     const fetchResources = async () => {
       try {
         const response = await axios.get('https://automated-resource-upload.onrender.com/resources');
-        setResources(response.data);
+        setResources(response.data.reverse());
         console.log(response.data);
       } catch (error) {
         alert('Error fetching resources:');
@@ -51,7 +51,7 @@ export default function Resources() {
     <div className="flex flex-col sm:flex-row justify-between items-center mb-4 space-y-2 sm:space-y-0 sm:space-x-4">
   <input
     type="text"
-    placeholder="Search resources..."
+    placeholder="Search by unit name, unit code"
     value={searchTerm}
     onChange={(e) => setSearchTerm(e.target.value)}
     className="p-2 border border-gray-300 rounded text-teal-800 w-full sm:w-auto sm:flex-1"
@@ -97,26 +97,34 @@ export default function Resources() {
               </div>
               </div>
              
-              <div className={`p-4 shadow rounded flex justify-center items-center ${resource.isNotes ? 'bg-fuchsia-600' : 'bg-teal-800'} mb-4`}>
+              <div className={`py-4 px-1 shadow rounded flex justify-start items-center ${resource.isNotes ? 'bg-teal-800' : 'bg-sky-700'} mb-4`}>
                 <img
                   src="/pdf3.png" // Reference the image in the public folder
                   alt="Resource Image"
-                  className="w-24 h-24 object-cover bg-teal-900 p-3 rounded-full mb-4" // Set a smaller width and height (e.g., 8rem x 8rem)
+                  className="w-24 h-24 object-cover  p-3 mb-4" // Set a smaller width and height (e.g., 8rem x 8rem)
                   />
-                <div className={`p-4 rounded ${isDarkMode ? 'bg-teal-800 text-white' : 'bg-white'} ml-2  mb-4`}>
-               <h3 className="">Free to Download</h3>
-               
+                <div className={`p-4 rounded  ml-2  mb-4`}>
+                <p className={` uppercase ${isDarkMode ? ' text-gray-100' : 'text-gray-100'}`}> {resource.unitCode}</p>               
+                <h3 className={` uppercase text-sm ${isDarkMode ? ' text-gray-300' : 'text-gray-300'}`}>{resource.isNotes ? 'Notes Available' : 'Past Paper'}</h3>
+              </div>
+              <div className='relative w-full h-full'>
+              {index >= 3 && (
+                      <img
+                        src="/premium.png"
+                        alt="Premium Badge"
+                        className="absolute top-8 right-0 w-10 h-12 object-cover p-3 mb-4"
+                      />
+                    )}
               </div>
               </div>
-              <h3 className="font-bold uppercase">{resource.unitName}</h3>
-              <p className=" uppercase"> {resource.unitCode}</p>
-              <p>{resource.isNotes ? 'Notes Available' : 'Past Paper'}</p>
-
+          
+              <p className='uppercase'>              {resource.unitName}
+              </p>
               <button
                 onClick={()=>   {  
                   sessionStorage.setItem('fileURI', resource.fileURI);
-                  router.push('/view')   } }
-                className="px-2 py-1 bg-teal-500 text-white rounded flex items-center justify-center"
+                  router.push('/premium')   } }
+                className="px-2 py-2 mt-3 text-xs bg-sky-800 text-white rounded flex items-center justify-center"
               >
                 View Resource
               </button>
