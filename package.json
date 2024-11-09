@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@cyntler/react-doc-viewer": "^1.17.0",
     "@fontsource/poppins": "^5.1.0",
     "@heroicons/react": "v1",
     "aws-sdk": "^2.1692.0",

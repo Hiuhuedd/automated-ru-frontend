@@ -1,60 +1,79 @@
 "use client";
 import axios from 'axios';
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
+import "@cyntler/react-doc-viewer/dist/index.css";
 
 const ViewResource = () => {
-  const router = useRouter();
   const [fileURI, setFileURI] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchPresignedUrl = async () => {
       try {
         const storedUrl = sessionStorage.getItem('fileURI');
-        let fileName;
         
-        if (storedUrl) {
-          // Extract the path after the bucket domain
-          const url = new URL(storedUrl);
-          fileName = url.pathname.substring(1); // Remove the leading '/' from the pathname
+        if (!storedUrl) {
+          throw new Error('No file URI found in session storage');
         }
-        if (fileName) {
-          // Make an API call to your server to fetch the presigned URL
-          const response = await axios.get(`https://automated-resource-upload.onrender.com/generatePresignedUrl?fileName=${encodeURIComponent(fileName)}`);
-          
-          // Check if URL is returned and set it
-          if (response.data.url) {
-            setFileURI(response.data.url);
-          } else {
-            console.error('Failed to retrieve presigned URL');
-          }
+
+        const url = new URL(storedUrl);
+        const fileName = url.pathname.substring(1);
+
+        const response = await axios.get(
+          `https://automated-resource-upload.onrender.com/generatePresignedUrl?fileName=${encodeURIComponent(fileName)}`
+        );
+
+        if (!response.data?.url) {
+          throw new Error('No presigned URL returned from server');
         }
+console.log(response.data.url)
+        setFileURI(response.data.url);
       } catch (error) {
-        console.error('Error generating presigned URL:', error);
+        console.error('Error fetching presigned URL:', error);
+        setError(error.message);
       } finally {
-        setLoading(false); // Set loading to false after the request is complete
+        setLoading(false);
       }
     };
 
-    fetchPresignedUrl(); // Invoke the async function
+    fetchPresignedUrl();
   }, []);
 
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container mx-auto p-4">
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+          <p>Error loading the resource: {error}</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="container">
-      <h1>View Resource</h1>
-      {loading ? (
-        <p>Loading...</p>
-      ) : fileURI ? (
-        <iframe
-          src={fileURI}
-          width="100%"
-          height="600"
-          frameBorder="0"
-          title="Resource Document"
-        ></iframe>
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">View Resource</h1>
+      {fileURI ? (
+        <div className="border rounded-lg shadow-lg h-screen">
+          <DocViewer
+            documents={[{ uri: fileURI }]}
+            pluginRenderers={DocViewerRenderers}
+            className="h-full"
+          />
+        </div>
       ) : (
-        <p>Failed to load the resource.</p>
+        <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded">
+          <p>No resource available to display.</p>
+        </div>
       )}
     </div>
   );
