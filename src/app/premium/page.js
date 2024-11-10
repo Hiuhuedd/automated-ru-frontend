@@ -30,7 +30,8 @@ export default function PremiumPage() {
       router.push("/authScreen");
     } else {
       sessionStorage.setItem("amount", selectedPlan === "monthly" ? "99" : "249");
-  
+      sessionStorage.setItem("selectedPlan", selectedPlan);
+
       const url = `/checkout`;
       router.push(url);
     }
