@@ -27,7 +27,7 @@ export default function PremiumPage() {
   const handleSubscription = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user) {
-      router.push("/authScreen");
+      router.push("/auth");
     } else {
       sessionStorage.setItem("amount", selectedPlan === "monthly" ? "99" : "249");
       sessionStorage.setItem("selectedPlan", selectedPlan);
