@@ -29,7 +29,9 @@ export default function PremiumPage() {
     if (!user) {
       router.push("/authScreen");
     } else {
-      const url = `/checkout?plan=${selectedPlan}&amount=${selectedPlan === "monthly" ? 99 : 249}`;
+      sessionStorage.setItem("amount", selectedPlan === "monthly" ? "99" : "249");
+  
+      const url = `/checkout`;
       router.push(url);
     }
   };

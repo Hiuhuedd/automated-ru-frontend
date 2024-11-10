@@ -1,17 +1,13 @@
-// src/app/mpesaCheckout.js
 "use client";
-import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-
-
-
+import { useRouter } from "next/navigation";
 
 export default function MpesaCheckout() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const plan = searchParams.get("plan");
-  const amount = searchParams.get("amount");
+
+  // Retrieve the plan and amount from sessionStorage
+  const plan = sessionStorage.getItem("selectedPlan");
+  const amount = sessionStorage.getItem("amount");
 
   const [mpesaNumber, setMpesaNumber] = useState("");
   const [user, setUser] = useState(null);
@@ -28,7 +24,7 @@ export default function MpesaCheckout() {
     alert(`Processing ${plan} plan payment of Ksh ${amount} for M-Pesa number ${mpesaNumber}`);
     // Add logic to integrate with the M-Pesa API if available
     router.push("/resources"); 
-    // Redirect back to the resources page or wherever applicable
+    // Redirect to the resources page or wherever applicable
   };
 
   return (
