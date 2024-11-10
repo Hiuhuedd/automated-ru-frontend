@@ -5,26 +5,37 @@ import { useRouter } from "next/navigation";
 export default function MpesaCheckout() {
   const router = useRouter();
 
-  // Retrieve the plan and amount from sessionStorage
-  const plan = sessionStorage.getItem("selectedPlan");
-  const amount = sessionStorage.getItem("amount");
+  // Initialize plan and amount with default values or null
+  const [plan, setPlan] = useState(null);
+  const [amount, setAmount] = useState(null);
 
   const [mpesaNumber, setMpesaNumber] = useState("");
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    if (storedUser) {
-      setUser(storedUser);
-      setMpesaNumber(storedUser.phoneNumber);
+    // Check if we're running on the client side
+    if (typeof window !== "undefined") {
+      const storedPlan = sessionStorage.getItem("selectedPlan");
+      const storedAmount = sessionStorage.getItem("amount");
+
+      // Set the plan and amount from sessionStorage
+      if (storedPlan && storedAmount) {
+        setPlan(storedPlan);
+        setAmount(storedAmount);
+      }
+
+      const storedUser = JSON.parse(localStorage.getItem("user"));
+      if (storedUser) {
+        setUser(storedUser);
+        setMpesaNumber(storedUser.phoneNumber);
+      }
     }
-  }, []);
+  }, []); // Empty dependency array ensures this runs once when the component is mounted
 
   const handleCheckout = () => {
     alert(`Processing ${plan} plan payment of Ksh ${amount} for M-Pesa number ${mpesaNumber}`);
     // Add logic to integrate with the M-Pesa API if available
-    router.push("/resources"); 
-    // Redirect to the resources page or wherever applicable
+    router.push("/resources");
   };
 
   return (
