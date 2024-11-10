@@ -1,9 +1,17 @@
 // src/app/mpesaCheckout.js
 "use client";
-import { useRouter, useSearchParams } from "next/navigation";
+import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export default function MpesaCheckout() {
+// Dynamically load the component on the client-side only
+const MpesaCheckoutClient = dynamic(() => Promise.resolve(MpesaCheckout), {
+  ssr: false,
+});
+
+export default MpesaCheckoutClient;
+
+function MpesaCheckout() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const plan = searchParams.get("plan");
@@ -24,8 +32,7 @@ export default function MpesaCheckout() {
     alert(`Processing ${plan} plan payment of Ksh ${amount} for M-Pesa number ${mpesaNumber}`);
     // Add logic to integrate with the M-Pesa API if available
     router.push("/resources"); 
-    // Redirect back to the 
-
+    // Redirect back to the resources page or wherever applicable
   };
 
   return (
