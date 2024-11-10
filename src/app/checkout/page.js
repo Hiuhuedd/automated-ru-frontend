@@ -4,14 +4,10 @@ import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-// Dynamically load the component on the client-side only
-const MpesaCheckoutClient = dynamic(() => Promise.resolve(MpesaCheckout), {
-  ssr: false,
-});
 
-export default MpesaCheckoutClient;
 
-function MpesaCheckout() {
+
+export default function MpesaCheckout() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const plan = searchParams.get("plan");
